@@ -49,3 +49,11 @@ class World:
         if not self.in_bounds(x, y):
             return False
         return not MATERIALS[self.material[y, x]].solid
+
+
+def find_spawn(tmx: pytmx.TiledMap) -> tuple[int, int]:
+    for obj in tmx.objects:
+        if obj.name == "player_spawn":
+            return int(obj.x // tmx.tilewidth), int(obj.y // tmx.tileheight)
+
+    raise ValueError("no player_spawn found.")
