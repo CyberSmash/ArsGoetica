@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="3">
- <tileset firstgid="1" source="../Downloads/kenney_1-bit-pack/Tilemap/tileset_colored.tsx"/>
  <tileset firstgid="1025" source="Kenny1-bit.tsx"/>
  <layer id="1" name="terrain" width="30" height="20">
   <properties>
