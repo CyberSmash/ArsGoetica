@@ -32,24 +32,21 @@ def build_sprites(tmx: pytmx.TiledMap) -> dict[int, pygame.Surface]:
     }
 
 def build_agent_sprites(tmx: pytmx.TiledMap) -> dict[str, pygame.Surface]:
-    sprites = {}
-    for tx in tmx.tilesets:
-        for local_id in range(tx.tilecount):
-            gid = tx.firstgid + local_id
-            props = tmx.get_tile_properties_by_gid(gid)
-            if props and "agent_name" in props:
-                sprites[props["agent_name"]] =  tmx.get_tile_image_by_gid(gid)
-    return sprites
+    # Iterate tile_properties (keyed by pytmx's actual gids) rather than computing
+    # firstgid + local_id — pytmx compacts to referenced tiles, so that arithmetic
+    # doesn't match its gid numbering. Mirrors build_sprites.
+    return {
+        p["agent_name"]: tmx.get_tile_image_by_gid(gid)
+        for gid, p in tmx.tile_properties.items()
+        if p and "agent_name" in p
+    }
 
 def build_effect_sprites(tmx: pytmx.TiledMap) -> dict[str, pygame.Surface]:
-    sprites = {}
-    for tx in tmx.tilesets:
-        for local_id in range(tx.tilecount):
-            gid = tx.firstgid + local_id
-            props = tmx.get_tile_properties_by_gid(gid)
-            if props and "effect_name" in props:
-                sprites[props["effect_name"]] = tmx.get_tile_image_by_gid(gid)
-    return sprites
+    return {
+        p["effect_name"]: tmx.get_tile_image_by_gid(gid)
+        for gid, p in tmx.tile_properties.items()
+        if p and "effect_name" in p
+    }
 
 TILE_SIZE = 16
 
