@@ -31,17 +31,17 @@ class Material:
 
 _next_id = itertools.count()
 
-MATERIALS: dict[int, Material] = {}
-ID_BY_NAME: dict[str, int] = {}
+ALL_UNIQUE_MATERIALS: dict[int, Material] = {}
+MATERIAL_ID_BY_NAME: dict[str, int] = {}
 
 def register(mat: Material) -> int:
     mid = next(_next_id)
-    MATERIALS[mid] = mat
-    ID_BY_NAME[mat.name] = mid
+    ALL_UNIQUE_MATERIALS[mid] = mat
+    MATERIAL_ID_BY_NAME[mat.name] = mid
     return mid
 
 def material_lookup(field: str) -> np.ndarray:
-    return np.array([getattr(MATERIALS[i], field) for i in range(len(MATERIALS))])
+    return np.array([getattr(ALL_UNIQUE_MATERIALS[i], field) for i in range(len(ALL_UNIQUE_MATERIALS))])
 
 AIR_THERMAL_CONDUCTIVITY = 0.15
 
@@ -113,11 +113,27 @@ WINDOW = register(Material("window",
                            solid=True, 
                            thermal_conductivity=0.05))
 
-DOOR = register(Material("door", 
-                         solid=False, 
+DOOR = register(Material("door",
+                         solid=False,
                          thermal_conductivity=0.0))
+
+TREE = register(Material("tree",
+                         solid=True,
+                         thermal_conductivity=0.05,
+                         max_fuel_c=10000,
+                         ignition_temp=700))
+
+DIRT_PATH_ELBOW = register(Material("dirt_path_elbow",
+                         thermal_conductivity=AIR_THERMAL_CONDUCTIVITY))
+
+# Explicit "no physics" material. Tag purely decorative tiles with material_name
+# "void" so intent is stated, not guessed. Passable, non-flammable, air-like heat
+# so it behaves as neutral empty space. Untagged tiles are still a hard error.
+VOID = register(Material("void",
+                         solid=False,
+                         thermal_conductivity=AIR_THERMAL_CONDUCTIVITY))
 
 # Footgun - This needs to happen AFTER all materials are registered. If not
 # it won't work properly. This may be a problem in the future with TOML files, or
 # any material defined outside of this file. BEWARE.
-COND_TABLE = np.array([m.thermal_conductivity for k, m in MATERIALS.items()])
+COND_TABLE = np.array([m.thermal_conductivity for k, m in ALL_UNIQUE_MATERIALS.items()])

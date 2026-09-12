@@ -14,7 +14,7 @@ import config
 
 class GameScreen(Screen):
 
-    def __init__(self, map_path: str = "map1.tmx"):
+    def __init__(self, map_path: str = "levels/level1.tmx"):
         self.ui_manager: UIManager = UIManager(WINDOW_SIZE)
         self.level: Level | None = None
         self.inspector: UITextBox | None = UITextBox(html_text="", relative_rect=(8, 8, 200, 250), manager=self.ui_manager)

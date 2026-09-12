@@ -25,8 +25,10 @@ EFFECT_RULES = [
 ]
 
 def build_sprites(tmx: pytmx.TiledMap) -> dict[int, pygame.Surface]:
+    # Keyed by gid, to match world.visual (which stores placed gids). Rendering is
+    # gid -> Surface; the material grid decides physics, not which sprite draws.
     return {
-        material.ID_BY_NAME[p["material_name"]]: tmx.get_tile_image_by_gid(gid) 
+        gid: tmx.get_tile_image_by_gid(gid)
             for gid, p in tmx.tile_properties.items()
             if p and "material_name" in p
     }
@@ -53,7 +55,7 @@ TILE_SIZE = 16
 def draw_world(screen, world: World, sprites: dict[int, pygame.Surface]):
     for y in range(world.material.shape[0]):
         for x in range(world.material.shape[1]):
-            screen.blit(sprites[world.material[y, x]], (x*TILE_SIZE, y*TILE_SIZE))
+            screen.blit(sprites[world.visual[y, x]], (x*TILE_SIZE, y*TILE_SIZE))
 
 def draw_effects(screen, world: World, sprites: dict[int, pygame.Surface]):
     for fn, name in EFFECT_RULES:
@@ -71,9 +73,9 @@ def draw_agent_sprites(screen, agents: list[Agent], agent_sprites: dict[str, pyg
 def draw_overhead(screen, world: World, sprites: dict[int, pygame.Surface]):
     for y in range(world.material.shape[0]):
         for x in range(world.material.shape[1]):
-            if not material.MATERIALS[world.material[y, x]].overhead:
+            if not material.ALL_UNIQUE_MATERIALS[world.material[y, x]].overhead:
                 continue
-            screen.blit(sprites[world.material[y, x]], (x * TILE_SIZE, y * TILE_SIZE))
+            screen.blit(sprites[world.visual[y, x]], (x * TILE_SIZE, y * TILE_SIZE))
 
 def show_overlay(low: int, high: int, data: np.ndarray):
     h, w = data.shape
@@ -118,7 +120,7 @@ def tile_inspector_text(world, cell):
     cx, cy = cell
     
     mid = int(world.material[cy, cx])
-    mat = material.MATERIALS[mid]
+    mat = material.ALL_UNIQUE_MATERIALS[mid]
     return (
             f"cell: {cx, cy}<br>"
             f"mat:  {mat.name}<br>"

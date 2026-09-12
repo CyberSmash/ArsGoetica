@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.12.2" name="Kenny1-bit" tilewidth="16" tileheight="16" tilecount="1078" columns="49">
  <tileoffset x="1" y="1"/>
- <image source="assets/monochrome_packed.png" width="784" height="352"/>
+ <image source="../assets/monochrome_packed.png" width="784" height="352"/>
  <tile id="0">
   <properties>
    <property name="material_name" value="dirt"/>
@@ -27,9 +27,39 @@
    <property name="material_name" value="grass"/>
   </properties>
  </tile>
+ <tile id="7">
+  <properties>
+   <property name="material_name" value="grass"/>
+  </properties>
+ </tile>
+ <tile id="51">
+  <properties>
+   <property name="material_name" value="tree"/>
+  </properties>
+ </tile>
+ <tile id="52">
+  <properties>
+   <property name="material_name" value="tree"/>
+  </properties>
+ </tile>
+ <tile id="53">
+  <properties>
+   <property name="material_name" value="tree"/>
+  </properties>
+ </tile>
+ <tile id="54">
+  <properties>
+   <property name="material_name" value="tree"/>
+  </properties>
+ </tile>
  <tile id="57">
   <properties>
    <property name="material_name" value="dirt_path_vert"/>
+  </properties>
+ </tile>
+ <tile id="58">
+  <properties>
+   <property name="material_name" value="dirt_path_elbow"/>
   </properties>
  </tile>
  <tile id="122">
@@ -45,6 +75,11 @@
  <tile id="495">
   <properties>
    <property name="material_name" value="wood_door"/>
+  </properties>
+ </tile>
+ <tile id="540">
+  <properties>
+   <property name="material_name" value="stone_wall"/>
   </properties>
  </tile>
  <tile id="541">
@@ -77,9 +112,39 @@
    <property name="material_name" value="door"/>
   </properties>
  </tile>
+ <tile id="643">
+  <properties>
+   <property name="material_name" value="stone_wall"/>
+  </properties>
+ </tile>
+ <tile id="644">
+  <properties>
+   <property name="material_name" value="stone_wall"/>
+  </properties>
+ </tile>
  <tile id="699">
   <properties>
    <property name="material_name" value="wood_floor"/>
+  </properties>
+ </tile>
+ <tile id="843">
+  <properties>
+   <property name="material_name" value="stone_wall"/>
+  </properties>
+ </tile>
+ <tile id="845">
+  <properties>
+   <property name="material_name" value="stone_wall"/>
+  </properties>
+ </tile>
+ <tile id="892">
+  <properties>
+   <property name="material_name" value="stone_wall"/>
+  </properties>
+ </tile>
+ <tile id="893">
+  <properties>
+   <property name="material_name" value="stone_wall"/>
   </properties>
  </tile>
 </tileset>

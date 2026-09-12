@@ -4,10 +4,11 @@ from world import AMBIENT_C
 import material
 COOLING_RATE = 0.1
 
-_N = len(material.MATERIALS)
+_N = len(material.ALL_UNIQUE_MATERIALS)
 IGNITION_LOOKUP = material.material_lookup("ignition_temp")
 BURN_HEAT_LOOKUP = material.material_lookup("burn_heat_c") 
-BURNS_INTO_LOOKUP = np.array([material.ID_BY_NAME[m.burns_into] if (m := material.MATERIALS[i]).burns_into else i for i in range(_N)], dtype=np.int32)
+BURNS_INTO_LOOKUP = np.array([material.MATERIAL_ID_BY_NAME[m.burns_into] if (m := material.ALL_UNIQUE_MATERIALS[i]).burns_into else i for i in range(_N)], dtype=np.int32)
+
 FLAMMABLE_LOOKUP = np.isfinite(IGNITION_LOOKUP)   # True where ignition_temp < inf
 
 class Simulation(object):
@@ -62,6 +63,8 @@ class Simulation(object):
         world.fuel_c[b] -= burn_heat[b]
         burnt = world.burning & (world.fuel_c <= 0)
         world.material[burnt] = BURNS_INTO_LOOKUP[mat][burnt]
+        # visual holds gids, not material ids -- map the NEW material to a sprite.
+        world.visual[burnt] = world.rep_gid[world.material[burnt]]
 
         world.burning[burnt] = False
         world.fuel_c[burnt] = 0.0

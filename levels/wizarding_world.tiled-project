@@ -1,0 +1,44 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "compatibilityVersion": 1100,
+    "extensionsPath": "extensions",
+    "folders": [
+        "."
+    ],
+    "properties": [
+    ],
+    "propertyTypes": [
+        {
+            "color": "#ffb30302",
+            "drawFill": true,
+            "id": 1,
+            "members": [
+                {
+                    "name": "target_map",
+                    "type": "string",
+                    "value": ""
+                },
+                {
+                    "name": "target_spawn",
+                    "type": "string",
+                    "value": ""
+                }
+            ],
+            "name": "Portal",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset",
+                "project"
+            ]
+        }
+    ]
+}
